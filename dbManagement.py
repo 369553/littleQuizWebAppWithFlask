@@ -12,11 +12,10 @@ connection = pymysql.connect(
 
 def getQuizQuestions(quizName):
     keepGo = False
-    match quizName:
-        case "nlp":
+    for element in getQuizNamesFromDB():
+        if quizName == element:
             keepGo = True
-        case "ai":
-            keepGo = True
+            break
     if keepGo:
         sql = "SELECT * FROM " + quizName
         questions = []
@@ -43,11 +42,10 @@ def getQuizQuestions(quizName):
 
 def getAnswerOfQuestions(quizName):
     keepGo = False
-    match quizName:
-        case "nlp":
+    for element in getQuizNamesFromDB():
+        if quizName == element:
             keepGo = True
-        case "ai":
-            keepGo = True
+            break
     if keepGo:
         sql = "SELECT answer FROM " + quizName
         answers = []
@@ -63,3 +61,16 @@ def getAnswerOfQuestions(quizName):
         return answers
     else:
         return None
+
+def getQuizNamesFromDB():
+    sql = "SHOW TABLES;"
+    tableNames = []
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute(sql)
+            for row in cursor.fetchall():
+                table = str(row["Tables_in_quizs"])
+                tableNames.append(table)
+    finally:
+        pass
+    return tableNames

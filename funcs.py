@@ -1,5 +1,5 @@
 from flask import render_template
-from dbManagement import getQuizQuestions, getAnswerOfQuestions
+from dbManagement import getQuizQuestions, getAnswerOfQuestions, getQuizNamesFromDB
 import json
 
 # Anasayfa:
@@ -33,3 +33,6 @@ def calculatePoint(data):
     point = (trueAnswersCount / len(realAnswers) * 100)
     #print(point)
     return point
+
+def getQuizNames():
+    return getQuizNamesFromDB()

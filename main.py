@@ -1,6 +1,6 @@
 from flask import Flask, request, Response
 #from dbManagement import db
-from funcs import getQuizPage, quizNotFound, getHomePage, calculatePoint
+from funcs import getQuizPage, quizNotFound, getHomePage, calculatePoint, getQuizNames
 quizApp = Flask(__name__)
 
 # GELEN ANASAYFA İSTEĞİNİ KARŞILAMA:
@@ -11,15 +11,15 @@ def home():
 # GELEN SINAV LİNKLERİNİ KARŞILAMA:
 @quizApp.route("/<quizName>")
 def quiz(quizName):
-    match(quizName):
-        case "nlp":
-            return getQuizPage("nlp")
-        case "ai":
-            return getQuizPage("ai")
-        case _:
-            return quizNotFound()
-    content = "AA"
-    return f"<p>{content}</p>"
+    keepGo = False
+    for element in getQuizNames():
+        if quizName == element:
+            keepGo = True
+            break
+    if keepGo:
+        return getQuizPage(quizName)
+    else:
+        return quizNotFound()
 
 # SINAV SONUCUNU KARŞILAMA:
 @quizApp.route("/result", methods=['POST'])
