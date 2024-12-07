@@ -1,0 +1,99 @@
+Kodland sınav websitesi için veritabanı tasarımı:
+Veritabanı ismi : quizs
+VERİTABANI OLUŞTURMA KODU : CREATE DATABASE quizs;
+
+USE quizs;
+#TABLO - 1 : nlp
+#    id : int PRIMARY KEY AUTO_INCREMENT
+#    question : VARCHAR(100)
+#    optionA : VARCHAR(100)# A seçeneği
+#    optionB : VARCHAR(100)# B seçeneği
+#    optionC : VARCHAR(100)# C seçeneği
+#    optionD : VARCHAR(100)# D seçeneği
+#    answer : CHAR(1)#DOĞRU CEVÂBIN ŞIKKI
+#    explanation : VARCHAR(250)#Doğru cevâpla ilgili açıklama
+
+CREATE TABLE nlp (
+id int PRIMARY KEY AUTO_INCREMENT,
+question VARCHAR(500) NOT NULL,
+optionA VARCHAR(100) NOT NULL,
+optionB VARCHAR(100) NOT NULL,
+optionC VARCHAR(100) NOT NULL,
+optionD VARCHAR(100) NOT NULL,
+answer CHAR(1) NOT NULL,
+explanation VARCHAR(250));
+
+#SELECT * FROM nlp;
+
+INSERT INTO nlp(question, optionA, optionB, optionC, optionD, answer, explanation) VALUES(
+"Hangi teknik doğal dil işleme için daha anlamlı bir tekniktir?",
+"Kelimeleri gömerek (embedding) sayılarla ifade etmek",
+"Kelimeleri baş harflerine göre ayırarak, gruplandırmak",
+"Kelimelerin sayısına bakarak yorum yapmak",
+"Kelimeleri temizledikten sonra sadece konu bazında gruplamak",
+'A',
+"Embedding ile kelimeler arasındaki benzerliklerin sayılarla ifade edilebilmesi amaçlanır. Bununla kelimelerin anlamlarının sayılarla ifade edilmek istenir");
+
+
+INSERT INTO nlp(question, optionA, optionB, optionC, optionD, answer, explanation) VALUES(
+"Hangisi doğal dil işlemenin kullanıldığı alanlardan birisi değildir?",
+"E-ticâret sitelerinde yorumlar için duygu analizi",
+"Sohbet botları",
+"Harflerin hangi karakter setine âit olduğunun tespit edilmesi",
+"Cümle öğelerinin (yüklem, özne vs.) bulunması",
+'C',
+"Karakter setleri unicode standardıyla belirlenmiş olup, gelen karakterin koduna göre ayırt edilebilir; bunun için doğal dil işlemeye gerek yoktur");
+
+INSERT INTO nlp(question, optionA, optionB, optionC, optionD, answer, explanation) VALUES(
+"\"2014 senesinde Google tarafından duyurulan, kelimeler arasındaki ilişkiyi sayısal değerlere dökebilen ve sonraları çok popüler olan bir kelime gömme (embedding) yöntemidir\" Bu cümleyle anlatılan yöntem hangisidir?",
+"Word2Vec",
+"GloVe",
+"TF-IDF",
+"Karar ağaçları",
+'A',
+"Word2Vec Google tarafından geliştirilen ve sonraları çok popüler olan bir yöntemdir.");
+
+
+INSERT INTO nlp(question, optionA, optionB, optionC, optionD, answer, explanation) VALUES(
+"Hangisi doğal dil işlemedeki 'veri temizleme' olarak isimlendirilen aşamada yapılan işlemlerden birisi değildir?",
+"'stop-words' isimli anlamsız kelimeleri metinden çıkarmak",
+"Emojileri metinden çıkarmak",
+"Noktalama işaretlerini metinden çıkarmak",
+"Kelime gömme modelini eğitmek",
+'D',
+"Son seçenekteki işlem verinin hazırlanmasıyla ilgili değildir");
+
+---------------------------------.
+#TABLO - 2:
+
+USE quizs;
+
+CREATE TABLE ai (
+id int PRIMARY KEY AUTO_INCREMENT,
+question VARCHAR(500) NOT NULL,
+optionA VARCHAR(100) NOT NULL,
+optionB VARCHAR(100) NOT NULL,
+optionC VARCHAR(100) NOT NULL,
+optionD VARCHAR(100) NOT NULL,
+answer CHAR(1) NOT NULL,
+explanation VARCHAR(250));
+
+
+INSERT INTO ai(question, optionA, optionB, optionC, optionD, answer, explanation) VALUES(
+"Hangisi yapay zekânın kullanıldığı problem çeşitlerinden birisi değildir",
+"Kümeleme",
+"Sınıflandırma",
+"Tahmin",
+"Kod derleme",
+'D',
+"");
+
+INSERT INTO ai(question, optionA, optionB, optionC, optionD, answer, explanation) VALUES(
+"Yapay sinir ağlarında girdiye eklenen fazlalığa ne isim verilir",
+"Bias",
+"Dropout",
+"Nöron",
+"Aktivasyon",
+'A',
+"");
+

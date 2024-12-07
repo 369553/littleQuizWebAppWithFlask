@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="tr">
+    <head>
+        <title>SINAV</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Burada çeşitli sınavlarla yeteneğinizi ispatlamanızı bekliyoruz">
+        <meta name="author" content="Mehmet Âkif SOLAK">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"/>
+    </head>
+    <body>
+        <header>
+            <div class="jumbotron text-center my-3">
+                {%if quizName=="nlp"%}
+                    <h2>Doğal dil işleme sınavına hoş geldiniz</h2>
+                {%else%}
+                    <h2>Yapay zekâ sınavına hoş geldiniz</h2>
+                {%endif%}
+            </div>
+        </header>
+        <div class="container">
+            <div class="form-group" id="oo">
+                {%for question in questions%}
+                    <div class="card my-2">
+                        <h4>{{question}}</h4>
+                        <form name="question{{question.id}}" class="form-group">
+                            <input type="radio" name="answerFor{{question.id}}" class="btn-check mb-2" id="{{question.id}}optA">
+                            <label class="btn btn-outline-success mb-2" for="{{question.id}}optA">A) {{question.optA}}</label>
+<br/>
+                            <input type="radio" name="answerFor{{question.id}}" class="btn-check mb-2" id="{{question.id}}optB">
+                            <label class="btn btn-outline-success mb-2" for="{{question.id}}optB">B) {{question.optB}}</label>
+                            <br/>
+                            <input type="radio" name="answerFor{{question.id}}" class="btn-check mb-2" id="{{question.id}}optC">
+                            <label class="btn btn-outline-success mb-2" for="{{question.id}}optC">C) {{question.optC}}</label>
+                            <br/>
+                            <input type="radio" name="answerFor{{question.id}}" class="btn-check mb-2" id="{{question.id}}optD">
+                            <label class="btn btn-outline-success mb-2" for="{{question.id}}optD">D) {{question.optD}}</label>
+                        </form>
+                    </div>
+                {%endfor%}
+                <button id="send" class="btn btn-primary">SINAVI GÖNDER</button>
+                <h3 id="result">SONUÇ : </h3>
+            </div>
+        </div>
+        <footer class="container">
+            <p>Mehmet Akif SOLAK , msolak2034@protonmail.com</p>
+        </footer>
+        <script>
+            function showResult(){
+                console.log("aa");
+                var answer1A = document.getElementById("1optA").checked
+                document.getElementById("result").innerHTML = " SONUÇ : HENÜZ DESTEKLENMİYOR";
+            }
+            document.getElementById("send").addEventListener("click", showResult);
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+    </body>
+
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SINAV</title>
+        <meta charset="utf-8">
+        <meta name="description" content="Burada çeşitli sınavlarla yeteneğinizi ispatlamanızı bekliyoruz">
+        <meta name="author" content="Mehmet Âkif SOLAK">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"/>
+    </head>
+    <body>
+        <header>
+            <div class="jumbotron text-center">
+                <h2>SINAV SİTESİNE HOŞ GELDİNİZ</h2>
+            </div>
+        </header>
+        <div class="container center">
+            {%for link in redirectList%}
+                <a href="/{{link}}"class="btn btn-primary">{{link}} SINAVINI AÇ</a>
+            {%endfor%}
+        </div>
+        <footer>
+            <p>Mehmet Akif SOLAK , msolak2034@protonmail.com</p>
+        </footer>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+    </body>
+
+</html>
