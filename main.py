@@ -1,6 +1,6 @@
-from flask import Flask, request
+from flask import Flask, request, Response
 #from dbManagement import db
-from funcs import getQuizPage, quizNotFound, getHomePage
+from funcs import getQuizPage, quizNotFound, getHomePage, calculatePoint
 quizApp = Flask(__name__)
 
 # GELEN ANASAYFA İSTEĞİNİ KARŞILAMA:
@@ -20,6 +20,17 @@ def quiz(quizName):
             return quizNotFound()
     content = "AA"
     return f"<p>{content}</p>"
+
+# SINAV SONUCUNU KARŞILAMA:
+@quizApp.route("/result", methods=['POST'])
+def result():
+    if request.method == 'POST':
+        point = calculatePoint(request.data)# Puanı
+        respData = "<h3>" + str(point) + "</h3>"
+        resp = Response(response=respData, status=200, mimetype='application/xml')
+        return resp
+    else:
+        return ""
 
 # VARSAYILAN SAYFA BULUNAMADI DÖNÜŞÜNÜN ELE ALINMASI:
 @quizApp.errorhandler(404)

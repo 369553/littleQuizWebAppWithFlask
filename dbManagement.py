@@ -40,4 +40,26 @@ def getQuizQuestions(quizName):
         return questions
     else:
         return None
-    
+
+def getAnswerOfQuestions(quizName):
+    keepGo = False
+    match quizName:
+        case "nlp":
+            keepGo = True
+        case "ai":
+            keepGo = True
+    if keepGo:
+        sql = "SELECT answer FROM " + quizName
+        answers = []
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(sql)
+                for row in cursor.fetchall():
+                    answer = str(row["answer"])
+                    answers.append(answer)
+        finally:
+            pass
+            #connection.close()
+        return answers
+    else:
+        return None

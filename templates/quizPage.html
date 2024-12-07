@@ -9,15 +9,16 @@
     </head>
     <body>
         <header>
-            <div class="jumbotron text-center my-3">
+            <div class="jumbotron text-cneter my-3">
                 {%if quizName=="nlp"%}
                     <h2>Doğal dil işleme sınavına hoş geldiniz</h2>
                 {%else%}
                     <h2>Yapay zekâ sınavına hoş geldiniz</h2>
                 {%endif%}
+                <h6 id="quizCodeName">{{quizName}}</h6>
             </div>
         </header>
-        <div class="container">
+        <div class="container" id="mainContainer">
             <div class="form-group" id="oo">
                 {%for question in questions%}
                     <div class="card my-2">
@@ -45,10 +46,36 @@
             <p>Mehmet Akif SOLAK , msolak2034@protonmail.com</p>
         </footer>
         <script>
-            function showResult(){
-                console.log("aa");
-                var answer1A = document.getElementById("1optA").checked
-                document.getElementById("result").innerHTML = " SONUÇ : HENÜZ DESTEKLENMİYOR";
+            async function showResult(){
+                var forms = document.getElementsByTagName("form");
+                answers = [];
+                quizName = document.getElementById("quizCodeName").innerHTML;
+                for(var sayac = 0; sayac < forms.length; sayac++){
+                    var element = forms[sayac];
+                    var selected = "No";
+                    if(element[`${sayac + 1}optA`].checked)
+                        selected = "A";
+                    else if(element[`${sayac + 1}optB`].checked)
+                        selected = "B";
+                    else if(element[`${sayac + 1}optC`].checked)
+                        selected = "C";
+                    else if(element[`${sayac + 1}optD`].checked)
+                        selected = "D";
+                    answers[sayac] = selected;
+                }
+                body = {answers : answers, quizName : quizName};
+                asJson = JSON.stringify(body)
+                const response = await fetch("/result", {method:"POST", body:asJson, headers:new Headers({"content-type" : "application/json;charset=UTF-8"})});
+                const reader = response.body.getReader();
+                while(!(result = await reader.read()).done){
+                    console.log(result.value)
+                    var text = "";
+                    for(var i = 0; i < result.value.length; i++){
+                        text += String.fromCharCode(result.value[i]);
+                    }
+                    console.log(text);
+                    document.getElementById("result").innerHTML = " SONUÇ : " + text;
+                }
             }
             document.getElementById("send").addEventListener("click", showResult);
         </script>

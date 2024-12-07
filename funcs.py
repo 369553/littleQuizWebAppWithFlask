@@ -1,7 +1,6 @@
 from flask import render_template
-from Question import Question
-from dbManagement import getQuizQuestions
-
+from dbManagement import getQuizQuestions, getAnswerOfQuestions
+import json
 
 # Anasayfa:
 def getHomePage():
@@ -20,3 +19,17 @@ def quizNotFound():
 def getQuestions(quizName):
     questions = getQuizQuestions(quizName=quizName)
     return questions
+
+def calculatePoint(data):
+    asJson = json.loads(data.decode('utf-8'))
+    quizName = asJson["quizName"]
+    answers = asJson["answers"]
+    realAnswers = getAnswerOfQuestions(quizName)
+    trueAnswersCount = 0
+    for i in range(0, len(realAnswers)):
+        if realAnswers[i] == answers[i]:
+            trueAnswersCount += 1
+    #print(trueAnswersCount)
+    point = (trueAnswersCount / len(realAnswers) * 100)
+    #print(point)
+    return point
