@@ -1,14 +1,17 @@
 import pymysql.cursors
 from Question import Question
 
-connection = pymysql.connect(
+
+def getNewConnection():
+    connection = pymysql.connect(
     host = "localhost",
     user = "root",
     password = "LINQSE.1177",
     db = 'quizs',
     charset='utf8mb4',
     cursorclass=pymysql.cursors.DictCursor
-)
+    )
+    return connection
 
 def getQuizQuestions(quizName):
     keepGo = False
@@ -19,6 +22,7 @@ def getQuizQuestions(quizName):
     if keepGo:
         sql = "SELECT * FROM " + quizName
         questions = []
+        connection=getNewConnection()
         try:
             with connection.cursor() as cursor:
                 cursor.execute(sql)
@@ -34,8 +38,7 @@ def getQuizQuestions(quizName):
                     question = Question (id, questionText, optA, optB, optC, optD, answer, explanation)
                     questions.append(question)
         finally:
-            pass
-            #connection.close()
+            connection.close()
         return questions
     else:
         return None
@@ -49,6 +52,7 @@ def getAnswerOfQuestions(quizName):
     if keepGo:
         sql = "SELECT answer FROM " + quizName
         answers = []
+        connection=getNewConnection()
         try:
             with connection.cursor() as cursor:
                 cursor.execute(sql)
@@ -56,8 +60,7 @@ def getAnswerOfQuestions(quizName):
                     answer = str(row["answer"])
                     answers.append(answer)
         finally:
-            pass
-            #connection.close()
+            connection.close()
         return answers
     else:
         return None
@@ -65,6 +68,7 @@ def getAnswerOfQuestions(quizName):
 def getQuizNamesFromDB():
     sql = "SHOW TABLES;"
     tableNames = []
+    connection=getNewConnection()
     try:
         with connection.cursor() as cursor:
             cursor.execute(sql)
@@ -72,5 +76,5 @@ def getQuizNamesFromDB():
                 table = str(row["Tables_in_quizs"])
                 tableNames.append(table)
     finally:
-        pass
+        connection.close()
     return tableNames
