@@ -27,8 +27,11 @@ def result():
     if request.method == 'POST':
         point = calculatePoint(request.data)# Puanı
         respData = "<h3>" + str(point) + "</h3>"
-        resp = Response(response=respData, status=200, mimetype='application/xml')
-        return resp
+        try:
+            resp = Response(response=respData, status=200, mimetype='application/xml')
+            return resp
+        except:
+            return "Response oluşturulurken bir hata oluştu"
     else:
         return ""
 
@@ -39,4 +42,4 @@ def pageNotFound():
 
 # Uygulamayı çalıştırma:
 if __name__ == "__main__":
-    quizApp.run(debug=True)
+    quizApp.run(debug=False)
