@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, make_response
 from dbManagement import getQuizQuestions, getAnswerOfQuestions, getQuizNamesFromDB
 import json
 
@@ -9,7 +9,9 @@ def getHomePage():
 # Gelen sınav ismine göre sınav şablon dosyasına gerekli veritabanı
 # tablo ismi parametre olarak gönderilir; gelen sonuç geri döndürülür
 def getQuizPage(name):
-    return render_template("quizPage.html", quizName=name, questions=getQuestions(name))
+    response = make_response(render_template("quizPage.html", quizName=name, questions=getQuestions(name), maxPoint=0))
+    #response.set_cookie("maxPoint",0)
+    return response
 
 # İlgili sınavın bulunamadığına dâir sayfa:
 def quizNotFound():

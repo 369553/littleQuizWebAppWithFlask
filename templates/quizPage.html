@@ -9,11 +9,17 @@
     </head>
     <body>
         <header>
-            <div class="jumbotron text-cneter my-3">
+            <div class="jumbotron text-center my-3">
                 {%if quizName=="nlp"%}
-                    <h2>Doğal dil işleme sınavına hoş geldiniz</h2>
+                    <h2 class="d-inline">Doğal dil işleme sınavına hoş geldiniz</h2>
                 {%else%}
-                    <h2>Yapay zekâ sınavına hoş geldiniz</h2>
+                    <h2 class="d-inline">Yapay zekâ sınavına hoş geldiniz</h2>
+                {%endif%}
+                <h5 class="mx-4 text-right d-inline">En yüksek puan : </h5>
+                {%if maxPoint is not none%}
+                    <h5 id="maxPoint" class="d-inline">{{maxPoint}}</h5>
+                {%else%}
+                    <h5 id="maxPoint" class="d-inline">0</h5>
                 {%endif%}
                 <h6 id="quizCodeName" style="visibility:hidden;">{{quizName}}</h6>
             </div>
@@ -50,6 +56,7 @@
                 var forms = document.getElementsByTagName("form");
                 answers = [];
                 quizName = document.getElementById("quizCodeName").innerHTML;
+                maxPoint = document.getElementById("maxPoint").innerHTML;
                 for(var sayac = 0; sayac < forms.length; sayac++){
                     var element = forms[sayac];
                     var selected = "No";
@@ -75,6 +82,10 @@
                     }
                     console.log(text);
                     document.getElementById("result").innerHTML = " SONUÇ : " + text;
+                    var maxPointAsNumber = parseInt(maxPoint, 10);
+                    var newPointAsNumber = parseInt(new DOMParser().parseFromString(text, "text/xml").getElementsByTagName("h3")[0].innerHTML, 10);
+                    if(newPointAsNumber > maxPointAsNumber)
+                        document.getElementById("maxPoint").innerHTML = newPointAsNumber;
                 }
             }
             document.getElementById("send").addEventListener("click", showResult);
